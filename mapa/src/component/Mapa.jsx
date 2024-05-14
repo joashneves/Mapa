@@ -1,11 +1,13 @@
-    import React, { useState, useEffect } from 'react';
-    import { MapContainer, TileLayer, Marker, Popup, Circle , useMapEvent  } from 'react-leaflet';
-    import 'leaflet/dist/leaflet.css';
-    import L from 'leaflet';
+import React, { useState, useEffect } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, Circle, useMapEvent, ImageOverlay } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import imageOverlayUrl from '../assets/mapaimagem.jpeg';
 
-    // Importando o ícone de marcador personalizado
-    import icon from 'leaflet/dist/images/marker-icon.png';
-    import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+
+// Importando o ícone de marcador personalizado
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import Marcador from './Marcador';
 
 // Configurando o ícone personalizado
@@ -20,52 +22,44 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 function LogCoordinatesOnClick() {
     useMapEvent('click', (e) => {
-      console.log("Latitude:", e.latlng.lat);
-      console.log("Longitude:", e.latlng.lng);
+        console.log("Latitude:", e.latlng.lat);
+        console.log("Longitude:", e.latlng.lng);
     });
-  
+
     return null;
-  }
+}
 
 const Mapa = () => {
 
-  const [userLocation, setUserLocation] = useState([-21.1058688, -41.0451968]);
-  const location2 = [-21.1058918, -41.0452768];
+    const locationIgrejaDasNeves = [-21.234602324714437, -40.9909987449646];
+    const center = [-21.234602324714437, -40.9909987449646]; // Coordenadas do centro do mapa
+    const imageSize = [1600, 900]; // Largura e altura da imagem
 
-  useEffect(() => {
-      // Obtendo a localização do usuário
-      if ("geolocation" in navigator) {
-          navigator.geolocation.getCurrentPosition(
-              (position) => {
-                  setUserLocation([position.coords.latitude, position.coords.longitude]);
-                  
-              },
-              (error) => {
-                  console.error('Erro ao obter localização do usuário:', error);
-              }
-          );
-      } else {
-          console.error('Geolocalização não suportada neste navegador.');
-      }
-      console.log(userLocation)
-  }, []); // A função useEffect só será executada uma vez, quando o componente for montado
+    const bounds = [[-21.23521234811371, -40.99198579788209], [-21.233322267410447, -40.988316535949714]]; // Coordenadas da imagem (sudeste e noroeste)
 
     return (
-        <MapContainer center={userLocation}
-         zoom={12}
-         style={{ height: '450px', width: '840px' }}
-       // Definindo o manipulador de eventos de clique no mapa
+        <MapContainer center={locationIgrejaDasNeves}
+            zoom={12}
+            style={{ height: '450px', width: '840px' }}
+        // Definindo o manipulador de eventos de clique no mapa
         >
             <TileLayer
-            
+
                 attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-             <LogCoordinatesOnClick />
-             {/* Adicione um círculo ao mapa */}
-             <Marcador location={userLocation} content="ocupado" />
-             <Marcador location={location2} content="descupado" />
-             
+            {/* Função para clicar no mapa e mostras as coordenadas */}
+            <LogCoordinatesOnClick />
+            {/* Adicione uma imagem ao mapa */}
+            <ImageOverlay
+                url={imageOverlayUrl}
+                bounds={bounds}
+                opacity={1} // Opacidade da imagem (0 a 1)
+            />
+            {/* Adicione um círculo ao mapa */}
+            <Marcador location={locationIgrejaDasNeves} content="ocupado" />
+            <Marcador location={locationIgrejaDasNeves} content="descupado" />
+
         </MapContainer>
     );
 }
