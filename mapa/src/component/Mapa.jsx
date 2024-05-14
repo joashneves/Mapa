@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Circle  } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
+    import React, { useState, useEffect } from 'react';
+    import { MapContainer, TileLayer, Marker, Popup, Circle , useMapEvent  } from 'react-leaflet';
+    import 'leaflet/dist/leaflet.css';
+    import L from 'leaflet';
 
-// Importando o ícone de marcador personalizado
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+    // Importando o ícone de marcador personalizado
+    import icon from 'leaflet/dist/images/marker-icon.png';
+    import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import Marcador from './Marcador';
 
 // Configurando o ícone personalizado
 let DefaultIcon = L.icon({
@@ -17,10 +18,19 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
+function LogCoordinatesOnClick() {
+    useMapEvent('click', (e) => {
+      console.log("Latitude:", e.latlng.lat);
+      console.log("Longitude:", e.latlng.lng);
+    });
+  
+    return null;
+  }
+
 const Mapa = () => {
 
   const [userLocation, setUserLocation] = useState([-21.1058688, -41.0451968]);
-  
+  const location2 = [-21.1058918, -41.0452768];
 
   useEffect(() => {
       // Obtendo a localização do usuário
@@ -40,9 +50,6 @@ const Mapa = () => {
       console.log(userLocation)
   }, []); // A função useEffect só será executada uma vez, quando o componente for montado
 
-    const handleMapClick = (e) => {
-      console.log('Clicou')
-  };
     return (
         <MapContainer center={userLocation}
          zoom={12}
@@ -54,16 +61,11 @@ const Mapa = () => {
                 attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
+             <LogCoordinatesOnClick />
              {/* Adicione um círculo ao mapa */}
-             <Circle
-                center={userLocation}
-                pathOptions={{
-                    color: 'red',
-                    fillColor: '#f03',
-                    fillOpacity: 0.5,
-                    radius: 500
-                }}
-            />
+             <Marcador location={userLocation} content="ocupado" />
+             <Marcador location={location2} content="descupado" />
+             
         </MapContainer>
     );
 }
