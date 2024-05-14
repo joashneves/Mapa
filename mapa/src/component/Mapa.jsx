@@ -36,6 +36,12 @@ const Mapa = () => {
     const imageSize = [1600, 900]; // Largura e altura da imagem
 
     const bounds = [[-21.23521234811371, -40.99198579788209], [-21.233322267410447, -40.988316535949714]]; // Coordenadas da imagem (sudeste e noroeste)
+    const rotationAngle = 25; // Ângulo de rotação da imagem em graus
+
+    // Estilo CSS para rotacionar a imagem
+    const imageStyle = {
+        transform: `rotate(${rotationAngle}deg)`
+    };
 
     return (
         <MapContainer center={locationIgrejaDasNeves}
@@ -54,11 +60,11 @@ const Mapa = () => {
             <ImageOverlay
                 url={imageOverlayUrl}
                 bounds={bounds}
-                opacity={1} // Opacidade da imagem (0 a 1)
+                opacity={0.8} // Opacidade da imagem (0 a 1)
+                style={imageStyle} // Aplicar o estilo de rotação à imagem
             />
             {/* Adicione um círculo ao mapa */}
-            <Marcador location={locationIgrejaDasNeves} content="ocupado" />
-            <Marcador location={locationIgrejaDasNeves} content="descupado" />
+            <Marcador location={locationIgrejaDasNeves} content='ocupado'/>
 
         </MapContainer>
     );
