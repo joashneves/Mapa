@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Circle, useMapEvent, ImageOverlay } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import imageOverlayUrl from '../assets/mapaimagem.jpeg';
+import imageOverlayUrl from '../assets/test1.png';
 
 
 // Importando o ícone de marcador personalizado
@@ -31,22 +31,16 @@ function LogCoordinatesOnClick() {
 
 const Mapa = () => {
 
-    const locationIgrejaDasNeves = [-21.234602324714437, -40.9909987449646];
+    const locationIgrejaDasNeves =  [-21.234602324714437, -40.9909987449646];
     const center = [-21.234602324714437, -40.9909987449646]; // Coordenadas do centro do mapa
     const imageSize = [1600, 900]; // Largura e altura da imagem
 
-    const bounds = [[-21.23521234811371, -40.99198579788209], [-21.233322267410447, -40.988316535949714]]; // Coordenadas da imagem (sudeste e noroeste)
-    const rotationAngle = 25; // Ângulo de rotação da imagem em graus
-
-    // Estilo CSS para rotacionar a imagem
-    const imageStyle = {
-        transform: `rotate(${rotationAngle}deg)`
-    };
+    const bounds = [[-21.237902421195642,-40.992549061775215], [-21.2312521512244, -40.987318754196174]]; // Coordenadas da imagem (sudeste e noroeste)
 
     return (
         <MapContainer center={locationIgrejaDasNeves}
-            zoom={12}
-            style={{ height: '450px', width: '840px' }}
+            zoom={17}
+            style={{ height: '46rem', width: '74rem' }}
         // Definindo o manipulador de eventos de clique no mapa
         >
             <TileLayer
@@ -60,8 +54,8 @@ const Mapa = () => {
             <ImageOverlay
                 url={imageOverlayUrl}
                 bounds={bounds}
-                opacity={0.8} // Opacidade da imagem (0 a 1)
-                style={imageStyle} // Aplicar o estilo de rotação à imagem
+                opacity={1} // Opacidade da imagem (0 a 1)
+                zIndex={8}
             />
             {/* Adicione um círculo ao mapa */}
             <Marcador location={locationIgrejaDasNeves} content='ocupado'/>
