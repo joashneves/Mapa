@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Circle, useMapEvent, ImageOverlay } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import imageOverlayUrl from '../assets/test1.png';
+import imageOverlayUrl from '../assets/tes2.png';
 
 
 // Importando o ícone de marcador personalizado
@@ -35,8 +35,9 @@ const Mapa = () => {
     const center = [-21.234602324714437, -40.9909987449646]; // Coordenadas do centro do mapa
     const imageSize = [1600, 900]; // Largura e altura da imagem
 
-    const bounds = [[-21.237902421195642,-40.992549061775215], [-21.2312521512244, -40.987318754196174]]; // Coordenadas da imagem (sudeste e noroeste)
-
+    const bounds = [[ -21.235272350278947, -40.99162101745606 ], [ -21.22836194042447, -40.98676085472449]]// [[-21.237902421195642,-40.992549061775215], [-21.2312521512244, -40.987318754196174]]; // Coordenadas da imagem (sudeste e noroeste)
+    const boundstest = [[ -21.234217308646965,-40.98909437656403 ], [ -21.233987298568533, -40.9886384010315]]
+    const boundstest1 = [[ -21.234097303433423,  -40.9909987449646 ], [ -21.233957297227505,-40.99093973636628]]
     return (
         <MapContainer center={locationIgrejaDasNeves}
             zoom={17}
@@ -58,7 +59,8 @@ const Mapa = () => {
                 zIndex={8}
             />
             {/* Adicione um círculo ao mapa */}
-            <Marcador location={locationIgrejaDasNeves} content='ocupado'/>
+            <Marcador location={boundstest} content='ocupado'/>
+            <Marcador location={boundstest1} content='ocupado'/>
 
         </MapContainer>
     );
