@@ -8,7 +8,7 @@ import imageOverlayUrl from '../assets/tes2.png';
 // Importando o ícone de marcador personalizado
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-import Marcador from './Marcador';
+import Marcador from '../component/Marcador';
 
 // Configurando o ícone personalizado
 let DefaultIcon = L.icon({
@@ -35,9 +35,10 @@ const Mapa = () => {
     const center = [-21.234602324714437, -40.9909987449646]; // Coordenadas do centro do mapa
     const imageSize = [1600, 900]; // Largura e altura da imagem
 
-    const bounds = [[ -21.235272350278947, -40.99162101745606 ], [ -21.22836194042447, -40.98676085472449]]// [[-21.237902421195642,-40.992549061775215], [-21.2312521512244, -40.987318754196174]]; // Coordenadas da imagem (sudeste e noroeste)
+    const bounds = [[ -21.23568236442125, -40.99162101745606 ], [ -21.227251913953758,  -40.98520525990899 ]]// [[-21.237902421195642,-40.992549061775215], [-21.2312521512244, -40.987318754196174]]; // Coordenadas da imagem (sudeste e noroeste)
     const boundstest = [[ -21.234217308646965,-40.98909437656403 ], [ -21.233987298568533, -40.9886384010315]]
     const boundstest1 = [[ -21.234097303433423,  -40.9909987449646 ], [ -21.233957297227505,-40.99093973636628]]
+    const boundstest2 = [[-21.234352314395462, -40.98823070526124], [-21.234127304745964,  -40.9877371788025]]
     return (
         <MapContainer center={locationIgrejaDasNeves}
             zoom={17}
@@ -59,8 +60,9 @@ const Mapa = () => {
                 zIndex={8}
             />
             {/* Adicione um círculo ao mapa */}
-            <Marcador location={boundstest} content='ocupado'/>
-            <Marcador location={boundstest1} content='ocupado'/>
+            <Marcador location={boundstest} content={false}/>
+            <Marcador location={boundstest1} content={false}/>
+            <Marcador location={boundstest2} content={true}/>
 
         </MapContainer>
     );

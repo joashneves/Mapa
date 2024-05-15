@@ -8,12 +8,16 @@ import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
 const Marcador = (props) =>{
+    const ocupado = props.content; // se verdadeiro ocupado, se não livre
+    const cor = ocupado ? { color: 'red', fillColor: 'red'   } : { color: 'blue', fillColor: 'blue' } ;
+    const legenda = ocupado ? 'Ocupado' : 'Livre';
+
     return(
         <>
         <Rectangle 
                 bounds={props.location}
-                
-            ><Popup>{props.content}</Popup></Rectangle ></>
+                pathOptions={cor}
+            ><Popup>{legenda}</Popup></Rectangle ></>
     )
 }
 
