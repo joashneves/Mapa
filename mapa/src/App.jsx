@@ -5,7 +5,6 @@ import Mapa from './router/Mapa'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
