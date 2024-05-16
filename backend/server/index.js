@@ -43,6 +43,30 @@ app.get('/carregar-configuracoes', (req, res) => {
   });
 });
 
+app.put('/atualizar-configuracoes', (req, res) => {
+  const novasConfiguracoes = req.body;
+
+  fs.readFile('configuracoes.json', (err, data) => {
+    if (err) {
+      console.error('Erro ao carregar arquivo:', err);
+      return res.status(500).send('Erro ao carregar arquivo');
+    }
+
+    const configuracoesExistentes = JSON.parse(data);
+    const configuracoesAtualizadas = { ...configuracoesExistentes, ...novasConfiguracoes };
+    const jsonString = JSON.stringify(configuracoesAtualizadas);
+
+    fs.writeFile('configuracoes.json', jsonString, (err) => {
+      if (err) {
+        console.error('Erro ao salvar arquivo:', err);
+        return res.status(500).send('Erro ao salvar arquivo');
+      }
+      console.log('Arquivo atualizado com sucesso!');
+      res.status(200).send('Arquivo atualizado com sucesso!');
+    });
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
