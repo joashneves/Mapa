@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, Circle, useMapEvent, ImageOverl
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import imageOverlayUrl from '../assets/tes2.png';
-
+import axios from 'axios';
 
 // Importando o ícone de marcador personalizado
 import icon from 'leaflet/dist/images/marker-icon.png';
@@ -30,6 +30,19 @@ function LogCoordinatesOnClick() {
 }
 
 const Mapa = () => {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:3001/carregar-configuracoes')
+            .then(response => {
+                setData(response.data);
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error('Erro ao carregar dados:', error);
+            });
+    }, []); // A lista de dependências está vazia, portanto, useEffect será executado apenas uma vez após a montagem do componente
+
 
     const locationIgrejaDasNeves =  [-21.234602324714437, -40.9909987449646];
     const center = [-21.234602324714437, -40.9909987449646]; // Coordenadas do centro do mapa
@@ -60,9 +73,13 @@ const Mapa = () => {
                 zIndex={8}
             />
             {/* Adicione um círculo ao mapa */}
-            <Marcador location={boundstest} content={false}/>
-            <Marcador location={boundstest1} content={false}/>
-            <Marcador location={boundstest2} content={true}/>
+            {Object.values(data).map((o) => {
+                return (
+                    <Marcador 
+                    location={o.bounds}
+                    content={o.content}/>
+                )
+            })}
 
         </MapContainer>
     );

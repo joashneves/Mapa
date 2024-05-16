@@ -2,6 +2,7 @@
   "name": "mapa",
   "private": true,
   "version": "0.0.0",
+  "proxy": "http://localhost:3001",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.6.8",
     "leaflet": "^1.9.4",
     "leaflet-imageoverlay-rotated": "^0.2.1",
     "leaflet-rotatedmarker": "^0.2.0",

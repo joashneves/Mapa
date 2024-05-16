@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
 import Configuracao from "../component/Configuracao";
+import axios from 'axios';
 
 const Gerencia = () =>{
 
     const [configuracoes, setConfiguracoes] = useState([]);
 
-    function enviarInfo(){
-        console.log(configuracoes);
+    function enviarInfo() {
+        axios.post('http://localhost:3001/salvar-configuracoes', configuracoes)
+            .then(response => {
+                console.log('Configurações salvas com sucesso!');
+            })
+            .catch(error => {
+                console.error('Erro ao salvar configurações:', error.message);
+            });
     }
+
 
     const handleConfiguracaoChange = (message, bounds, content) => {
         // Verifique se já existe uma configuração com a mesma mensagem
