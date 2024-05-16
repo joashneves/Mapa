@@ -4,14 +4,15 @@ import checkFalse from "../assets/checkboxfalse.svg";
 import checkTrue from "../assets/checkboxtrue.svg";
 
 
-const Configuracao = ({ message, content, onChange }) => {
+const Configuracao = ({ message, content, bounds, onChange }) => {
     const [isChecked, setIsChecked] = useState(content);
     const imagem = isChecked ? checkTrue : checkFalse;
+    const boundsCord =  bounds;
   
     const handleCheckboxChange = () => {
       setIsChecked(!isChecked);
       // Chame a função onChange passando a mensagem e o novo estado da checkbox
-      onChange(message, !isChecked);
+      onChange(message, boundsCord, !isChecked);
     };
   
     return (
