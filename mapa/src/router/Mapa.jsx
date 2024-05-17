@@ -20,7 +20,7 @@ let DefaultIcon = L.icon({
 });
 
 L.Marker.prototype.options.icon = DefaultIcon;
-let click = 156; // numero de clicks
+let click = 262; // numero de clicks
 function LogCoordinatesOnClick() {
     useMapEvent('click', (e) => {
         console.log("========================");
