@@ -3,6 +3,8 @@ const fs = require('fs');
 const express = require("express");
 var cors = require('cors')
 
+const ip = '172.31.254.120';
+
 const PORT = process.env.PORT || 3001;
 
 const app = express();
@@ -67,8 +69,8 @@ app.put('/atualizar-configuracoes', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
+app.listen(PORT, ip, () => {
+  console.log(`Server listening on http://${ip}:${PORT}`);
 });
 
 app.listen(80, function () {

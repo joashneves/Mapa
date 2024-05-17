@@ -22,6 +22,7 @@ L.Marker.prototype.options.icon = DefaultIcon;
 
 function LogCoordinatesOnClick() {
     useMapEvent('click', (e) => {
+        console.log("========================");
         console.log("Latitude:", e.latlng.lat);
         console.log("Longitude:", e.latlng.lng);
     });
@@ -44,7 +45,7 @@ const Mapa = () => {
     }, []); // A lista de dependências está vazia, portanto, useEffect será executado apenas uma vez após a montagem do componente
 
 
-    const locationIgrejaDasNeves =  [-21.234602324714437, -40.9909987449646];
+    const locationIgrejaDasNeves =  [-21.234602324714437, -40.98519444465638];
     const center = [-21.234602324714437, -40.9909987449646]; // Coordenadas do centro do mapa
     const imageSize = [1600, 900]; // Largura e altura da imagem
 
