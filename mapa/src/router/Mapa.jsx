@@ -77,7 +77,9 @@ const Mapa = () => {
                 return (
                     <Marcador 
                     location={o.bounds}
-                    content={o.content}/>
+                    content={o.content}
+                    message={o.message}
+                    />
                 )
             })}
 

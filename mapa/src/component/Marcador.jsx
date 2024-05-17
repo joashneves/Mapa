@@ -19,7 +19,8 @@ const Marcador = (props) =>{
         <Rectangle 
                 bounds={bounds}
                 pathOptions={cor}
-            ><Popup>{legenda}</Popup></Rectangle ></>
+            ><Popup>{legenda}<br></br>
+                Lote : {props.message}</Popup></Rectangle ></>
     )
 }
 

@@ -8,7 +8,7 @@ const Gerencia = () =>{
     const [data, setData] = useState([]);
 
     function enviarInfo() {
-        axios.post('http://localhost:3001/salvar-configuracoes', configuracoes)
+        axios.post(`${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/salvar-configuracoes`, configuracoes)
             .then(response => {
                 console.log('Configurações salvas com sucesso!');
                 window.alert("Dados salvos com sucesso!");
@@ -19,6 +19,7 @@ const Gerencia = () =>{
     }
 
     useEffect(() => {
+        console.log(`${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/salvar-configuracoes`)
         axios.get('http://localhost:3001/carregar-configuracoes')
             .then(response => {
                 setData(response.data);
@@ -50,10 +51,9 @@ const Gerencia = () =>{
         }
     };
 
-
     return(
         <>
-        <button type="button" onClick={enviarInfo}>Salvas!</button>
+        <button type="button" onClick={enviarInfo} >Salvas!</button>
         {Object.values(data).map((o) => {
                 return (
                     <Configuracao 
