@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, Circle, useMapEvent, ImageOverl
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import imageOverlayUrl from '../assets/tes2.png';
+import imagemPorbaixo from '../assets/imagemtest.jpeg';
 import axios from 'axios';
 
 // Importando o ícone de marcador personalizado
@@ -19,12 +20,21 @@ let DefaultIcon = L.icon({
 });
 
 L.Marker.prototype.options.icon = DefaultIcon;
-
+let click = 156; // numero de clicks
 function LogCoordinatesOnClick() {
     useMapEvent('click', (e) => {
         console.log("========================");
         console.log("Latitude:", e.latlng.lat);
-        console.log("Longitude:", e.latlng.lng);
+        console.log(`
+        ,{
+            "message": "${click}",
+            "bounds": [
+                ${e.latlng.lat},
+                ${e.latlng.lng}
+            ],
+            "content": false
+          }`);
+          click++;
     });
 
     return null;
@@ -60,7 +70,6 @@ const Mapa = () => {
         // Definindo o manipulador de eventos de clique no mapa
         >
             <TileLayer
-
                 attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
@@ -74,6 +83,7 @@ const Mapa = () => {
                 zIndex={8}
             />
             {/* Adicione um círculo ao mapa */}
+            
             {Object.values(data).map((o) => {
                 return (
                     <Marcador 

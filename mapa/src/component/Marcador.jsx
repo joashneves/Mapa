@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Rectangle  } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Circle   } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -16,11 +16,12 @@ const Marcador = (props) =>{
     
     return(
         <>
-        <Rectangle 
-                bounds={bounds}
+        <Circle  
+                center={bounds}
+                radius={8}
                 pathOptions={cor}
-            ><Popup>{legenda}<br></br>
-                Lote : {props.message}</Popup></Rectangle ></>
+            >{props.message}<Popup>{legenda}<br></br>
+                Lote : {props.message}</Popup></Circle  ></>
     )
 }
 
