@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Configuracao from "../component/Configuracao";
 import axios from 'axios';
+import Login from '../component/Login';
 
 const Gerencia = () =>{
 
     const [configuracoes, setConfiguracoes] = useState([]);
     const [data, setData] = useState([]);
+
+    const [logado, setLogado] = useState(true);
 
     function enviarInfo() {
         axios.post(`${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/salvar-configuracoes`, configuracoes)
@@ -19,8 +22,21 @@ const Gerencia = () =>{
     }
 
     useEffect(() => {
+        const user = window.sessionStorage.getItem("user");
+        const password = window.sessionStorage.getItem("password");
+
+        const userSite = import.meta.env.VITE_REACT_APP_USER;
+        const passwordSite = import.meta.env.VITE_REACT_APP_PASSWORD;
+
+        if(user == userSite && password == passwordSite){
+            setLogado(false);
+        }else{
+            window.alert("Faça login");
+        }
+
+
         console.log(`${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/salvar-configuracoes`)
-        axios.get('http://localhost:3001/carregar-configuracoes')
+        axios.get(`${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/carregar-configuracoes`)
             .then(response => {
                 setData(response.data);
                 setConfiguracoes(response.data);
@@ -30,9 +46,6 @@ const Gerencia = () =>{
                 console.error('Erro ao carregar dados:', error);
             });
     }, []); // A lista de dependências está vazia, portanto, useEffect será executado apenas uma vez após a montagem do componente
-
-
-
 
     const handleConfiguracaoChange = (message, bounds, content) => {
         // Verifique se já existe uma configuração com a mesma mensagem
@@ -53,6 +66,8 @@ const Gerencia = () =>{
 
     return(
         <>
+        {logado ? (<Login/>) : (
+        <>
         <button type="button" onClick={enviarInfo} >Salvas!</button>
         {Object.values(data).map((o) => {
                 return (
@@ -63,6 +78,9 @@ const Gerencia = () =>{
                     onChange={handleConfiguracaoChange}/>
                 )
             })}
+        </>
+        )
+        }
         </>
     )
 }

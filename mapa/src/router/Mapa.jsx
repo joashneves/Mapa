@@ -33,7 +33,7 @@ const Mapa = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3001/carregar-configuracoes')
+        axios.get(`${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/carregar-configuracoes`)
             .then(response => {
                 setData(response.data);
                 console.log(response.data);

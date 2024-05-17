@@ -1,0 +1,9 @@
+.logar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+}
+input{
+    margin: 1rem;
+}
