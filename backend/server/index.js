@@ -17,7 +17,7 @@ app.get("/api", (req, res) => {
 
 app.post('/salvar-configuracoes', (req, res) => {
   const configuracoes = req.body; // Dados recebidos do cliente
-  const jsonString = JSON.stringify(configuracoes);
+  const jsonString = JSON.stringify(configuracoes, null, 2); // Formatação legível com 2 espaços
 
   fs.writeFile('configuracoes.json', jsonString, (err) => {
       if (err) {

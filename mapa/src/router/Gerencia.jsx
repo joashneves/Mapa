@@ -22,6 +22,7 @@ const Gerencia = () =>{
         axios.get('http://localhost:3001/carregar-configuracoes')
             .then(response => {
                 setData(response.data);
+                setConfiguracoes(response.data);
                 console.log(response.data);
             })
             .catch(error => {
@@ -53,9 +54,15 @@ const Gerencia = () =>{
     return(
         <>
         <button type="button" onClick={enviarInfo}>Salvas!</button>
-        <Configuracao content={false} message="1" bounds={[[ -21.234217308646965,-40.98909437656403 ], [ -21.233987298568533, -40.9886384010315]]} onChange={handleConfiguracaoChange}/>
-        <Configuracao content={false} message="2" bounds={ [[ -21.234097303433423,  -40.9909987449646 ], [ -21.233957297227505,-40.99093973636628]]} onChange={handleConfiguracaoChange}/>
-        <Configuracao content={false} message="3" bounds={[[-21.234352314395462, -40.98823070526124], [-21.234127304745964,  -40.9877371788025]]} onChange={handleConfiguracaoChange}/>
+        {Object.values(data).map((o) => {
+                return (
+                    <Configuracao 
+                    content={o.content}
+                    message={o.message}
+                    bounds={o.bounds}
+                    onChange={handleConfiguracaoChange}/>
+                )
+            })}
         </>
     )
 }
