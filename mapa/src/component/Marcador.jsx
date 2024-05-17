@@ -18,7 +18,7 @@ const Marcador = (props) =>{
         <>
         <Circle  
                 center={bounds}
-                radius={8}
+                radius={5}
                 pathOptions={cor}
             >{props.message}<Popup>{legenda}<br></br>
                 Lote : {props.message}</Popup></Circle  ></>
