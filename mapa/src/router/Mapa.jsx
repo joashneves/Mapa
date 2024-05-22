@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Circle, useMapEvent, ImageOverlay , useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import imageOverlayUrl from '../assets/tes2.png';
+import imageOverlayUrl from '../assets/mapadefinitivo.jpeg';
 import imagemPorbaixo from '../assets/imagemtest.jpeg';
 import axios from 'axios';
 
@@ -12,7 +12,7 @@ import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import Marcador from '../component/Marcador';
 
 const locationIgrejaDasNeves = [-21.234602324714437, -40.9909987449646];
-const radius = 0.002; // Raio permitido em graus (aproximado)
+const radius = 0.005; // Raio permitido em graus (aproximado)
 
 // Configurando o ícone personalizado
 let DefaultIcon = L.icon({
@@ -23,7 +23,7 @@ let DefaultIcon = L.icon({
 });
 
 L.Marker.prototype.options.icon = DefaultIcon;
-let click = 262; // numero de clicks
+let click = 122; // numero de clicks
 function LogCoordinatesOnClick() {
     useMapEvent('click', (e) => {
         console.log("========================");
@@ -83,9 +83,9 @@ const Mapa = () => {
 
     const locationIgrejaDasNeves =  [-21.231802184929844,-40.98850429058076];
     const center = [-21.234602324714437, -40.9909987449646]; // Coordenadas do centro do mapa
-    const imageSize = [1600, 900]; // Largura e altura da imagem
+    const imageSize = [1600, 1265]; // Largura e altura da imagem
 
-    const bounds = [[ -21.23568236442125, -40.99162101745606 ], [ -21.227251913953758,  -40.98520525990899 ]]// [[-21.237902421195642,-40.992549061775215], [-21.2312521512244, -40.987318754196174]]; // Coordenadas da imagem (sudeste e noroeste)
+    const bounds = [[ -21.23568236442125, -40.99162101745606 ], [ -21.227275179810054,-40.98072052001954]]// [[-21.237902421195642,-40.992549061775215], [-21.2312521512244, -40.987318754196174]]; // Coordenadas da imagem (sudeste e noroeste)
     const boundstest = [[ -21.234217308646965,-40.98909437656403 ], [ -21.233987298568533, -40.9886384010315]]
     const boundstest1 = [[ -21.234097303433423,  -40.9909987449646 ], [ -21.233957297227505,-40.99093973636628]]
     const boundstest2 = [[-21.234352314395462, -40.98823070526124], [-21.234127304745964,  -40.9877371788025]]
@@ -93,7 +93,7 @@ const Mapa = () => {
         <MapContainer center={locationIgrejaDasNeves}
             zoom={18}
             minZoom={18}
-            maxZoom={18}
+            maxZoom={20}
             style={{ height: '56rem', width: '84rem' }}
             scrollWheelZoom={false}
         // Definindo o manipulador de eventos de clique no mapa

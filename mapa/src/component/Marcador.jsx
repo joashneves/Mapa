@@ -9,7 +9,7 @@ import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
 const Marcador = (props) =>{
     const ocupado = props.content; // se verdadeiro ocupado, se não livre
-    const cor = ocupado ? { color: 'red', fillColor: 'red'   } : { color: 'blue', fillColor: 'blue' } ;
+    const cor = ocupado ? { color: 'red', fillColor: 'red'   } : { color: 'blue', fillColor: 'yellow' } ;
     const legenda = ocupado ? 'Ocupado' : 'Livre'; 
     const bounds = props.location;
     console.log(bounds);
