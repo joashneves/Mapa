@@ -12,7 +12,6 @@ const Marcador = (props) =>{
     const cor = ocupado ? { color: 'red', fillColor: 'red'   } : { color: 'blue', fillColor: 'yellow' } ;
     const legenda = ocupado ? 'Ocupado' : 'Livre'; 
     const bounds = props.location;
-    console.log(bounds);
     
     return(
         <>

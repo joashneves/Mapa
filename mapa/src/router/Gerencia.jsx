@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Configuracao from "../component/Configuracao";
 import axios from 'axios';
 import Login from '../component/Login';
+import Loader from '../component/Spiner';
 
 const Gerencia = () =>{
 
@@ -66,8 +67,10 @@ const Gerencia = () =>{
 
     return(
         <>
+        
         {logado ? (<Login/>) : (
         <>
+        
         <button type="button" onClick={enviarInfo} >Salvas!</button>
         {Object.values(data).map((o) => {
                 return (
@@ -81,6 +84,7 @@ const Gerencia = () =>{
         </>
         )
         }
+       
         </>
     )
 }

@@ -76,3 +76,10 @@ app.listen(PORT, ip, () => {
 app.listen(80, function () {
   console.log('CORS-enabled web server listening on port 80')
 })
+// Enable cors at the server side. 
+const corsOption = {
+    origin: ['http://172.16.0.51:3002'],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+}
+app.use(cors(corsOption));

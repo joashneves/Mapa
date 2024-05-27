@@ -11,6 +11,10 @@ import { useMediaQuery } from 'react-responsive';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import Marcador from '../component/Marcador';
+import Spiner from '../component/Spiner';
+
+
+import jsonData from 'C:/Users/joas.neves/Desktop/Mapa kennedy/Mapa/backend/configuracoes.json';
 
 const locationIgrejaDasNeves = [-21.234602324714437, -40.9909987449646];
 const radius = 0.005; // Raio permitido em graus (aproximado)
@@ -69,33 +73,32 @@ function CheckMapBounds({ center, radius }) {
 
 const Mapa = () => {
     const [data, setData] = useState([]);
+    const [carregado, setCarregado] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
-            while (true) {
+            
                 try {
-                    window.alert("tentando acessar dados");
-                    const response = await fetch(`${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/carregar-configuracoes`);
-                    if (!response.ok) {
-                        throw new Error('Erro ao carregar dados');
-                    }
-                    const data = await response.json();
-                    setData(data);
-                    console.log(data);
-                    window.alert("dados carregados");
-                    window.sessionStorage.setItem("dados", JSON.stringify(data));
-                    break; // Sai do loop quando a solicitação é bem-sucedida
+                    console.log("tentado conectar aos dados...");
+                    const response = await Promise.race([
+                        axios.get(`${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/carregar-configuracoes`),
+                        new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out')), 2000))
+                    ]);
+                    
+                    setData(response.data);
+                    setCarregado(true);
+ 
                 } catch (error) {
                     console.error('Erro ao carregar dados:', error);
-                    window.alert("Não foi possível carregar os dados", error);
-                    await new Promise(res => setTimeout(res, 2000)); // Espera 2 segundos antes de tentar novamente
-                    fetchData();
+                    setData(jsonData); // Caso não consiga se conectar ao backend ele puxa do proprio computador
+                    setCarregado(true);
                 }
-            }
+            
         };
-    
+
         fetchData();
     }, []); // A lista de dependências está vazia, portanto, useEffect será executado apenas uma vez após a montagem do componente
+
 
     const locationIgrejaDasNeves =  [-21.231612173518077, -40.98758965730667];
     const center = [-21.234602324714437, -40.9909987449646]; // Coordenadas do centro do mapa
@@ -108,6 +111,8 @@ const Mapa = () => {
     const dragging = isMobile; // permita a pessoa se mover
 
     return (
+        <>
+        {carregado ? (
         <MapContainer center={locationIgrejaDasNeves}
             zoom={18}
             minZoom={17}
@@ -143,13 +148,10 @@ const Mapa = () => {
                     />
                 )
             })}
-                    <Marcador 
-                    location={locationIgrejaDasNeves}
-                    content={false}
-                    message="soccoro"
-                    />
-
         </MapContainer>
+        ): (<Spiner/>) }
+        </>
+        
     );
 }
 
