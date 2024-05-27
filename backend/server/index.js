@@ -3,7 +3,7 @@ const fs = require('fs');
 const express = require("express");
 var cors = require('cors')
 
-const ip = '172.31.254.120';
+const ip = '172.16.0.51';
 
 const PORT = process.env.PORT || 3001;
 

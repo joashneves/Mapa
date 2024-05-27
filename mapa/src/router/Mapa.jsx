@@ -5,6 +5,7 @@ import L from 'leaflet';
 import imageOverlayUrl from '../assets/mapadefinitivo.jpeg';
 import imagemPorbaixo from '../assets/imagemtest.jpeg';
 import axios from 'axios';
+import { useMediaQuery } from 'react-responsive';
 
 // Importando o ícone de marcador personalizado
 import icon from 'leaflet/dist/images/marker-icon.png';
@@ -70,32 +71,50 @@ const Mapa = () => {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        axios.get(`${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/carregar-configuracoes`)
-            .then(response => {
-                setData(response.data);
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('Erro ao carregar dados:', error);
-            });
+        const fetchData = async () => {
+            while (true) {
+                try {
+                    window.alert("tentando acessar dados");
+                    const response = await fetch(`${import.meta.env.VITE_REACT_APP_API_URL_BACKEND}/carregar-configuracoes`);
+                    if (!response.ok) {
+                        throw new Error('Erro ao carregar dados');
+                    }
+                    const data = await response.json();
+                    setData(data);
+                    console.log(data);
+                    window.alert("dados carregados");
+                    window.sessionStorage.setItem("dados", JSON.stringify(data));
+                    break; // Sai do loop quando a solicitação é bem-sucedida
+                } catch (error) {
+                    console.error('Erro ao carregar dados:', error);
+                    window.alert("Não foi possível carregar os dados", error);
+                    await new Promise(res => setTimeout(res, 2000)); // Espera 2 segundos antes de tentar novamente
+                    fetchData();
+                }
+            }
+        };
+    
+        fetchData();
     }, []); // A lista de dependências está vazia, portanto, useEffect será executado apenas uma vez após a montagem do componente
 
-
-    const locationIgrejaDasNeves =  [-21.231802184929844,-40.98850429058076];
+    const locationIgrejaDasNeves =  [-21.231612173518077, -40.98758965730667];
     const center = [-21.234602324714437, -40.9909987449646]; // Coordenadas do centro do mapa
     const imageSize = [1600, 1265]; // Largura e altura da imagem
 
     const bounds = [[ -21.23568236442125, -40.99162101745606 ], [ -21.227275179810054,-40.98072052001954]]// [[-21.237902421195642,-40.992549061775215], [-21.2312521512244, -40.987318754196174]]; // Coordenadas da imagem (sudeste e noroeste)
-    const boundstest = [[ -21.234217308646965,-40.98909437656403 ], [ -21.233987298568533, -40.9886384010315]]
-    const boundstest1 = [[ -21.234097303433423,  -40.9909987449646 ], [ -21.233957297227505,-40.99093973636628]]
-    const boundstest2 = [[-21.234352314395462, -40.98823070526124], [-21.234127304745964,  -40.9877371788025]]
+    
+    const isMobile = useMediaQuery({ query: '(max-width: 767px)' }); // se for um celular
+    const mapStyle = isMobile ? { height: '100vh', width: '100vw' } : { height: '56rem', width: '84rem' }; // ajuste o css
+    const dragging = isMobile; // permita a pessoa se mover
+
     return (
         <MapContainer center={locationIgrejaDasNeves}
             zoom={18}
-            minZoom={18}
+            minZoom={17}
             maxZoom={20}
-            style={{ height: '56rem', width: '84rem' }}
-            scrollWheelZoom={false}
+            style={mapStyle}
+            scrollWheelZoom={isMobile}
+            dragging={true}
         // Definindo o manipulador de eventos de clique no mapa
         >
             <TileLayer
@@ -124,6 +143,11 @@ const Mapa = () => {
                     />
                 )
             })}
+                    <Marcador 
+                    location={locationIgrejaDasNeves}
+                    content={false}
+                    message="soccoro"
+                    />
 
         </MapContainer>
     );
