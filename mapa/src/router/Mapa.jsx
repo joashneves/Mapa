@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Circle, useMapEvent, ImageOverlay , useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Circle, useMapEvent, ImageOverlay , useMap , SVGOverlay} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import imageOverlayUrl from '../assets/mapadefinitivo.jpeg';
-import imagemPorbaixo from '../assets/imagemtest.jpeg';
+import imagemPorbaixo from '../assets/jarare.PNG';
 import axios from 'axios';
 import { useMediaQuery } from 'react-responsive';
 
@@ -105,7 +105,10 @@ const Mapa = () => {
     const imageSize = [1600, 1265]; // Largura e altura da imagem
 
     const bounds = [[ -21.23568236442125, -40.99162101745606 ], [ -21.227275179810054,-40.98072052001954]]// [[-21.237902421195642,-40.992549061775215], [-21.2312521512244, -40.987318754196174]]; // Coordenadas da imagem (sudeste e noroeste)
-    
+    const quadrado = [ [-21.177120071317482,
+        -41.04391210017287], [-21.26347983786585,
+            -40.934496858471455]]
+
     const isMobile = useMediaQuery({ query: '(max-width: 767px)' }); // se for um celular
     const mapStyle = isMobile ? { height: '100vh', width: '100vw' } : { height: '56rem', width: '84rem' }; // ajuste o css
     const dragging = isMobile; // permita a pessoa se mover
@@ -122,32 +125,41 @@ const Mapa = () => {
             dragging={true}
         // Definindo o manipulador de eventos de clique no mapa
         >
+            <ImageOverlay
+                url={imagemPorbaixo}
+                bounds={quadrado}
+                opacity={1} // Opacidade da imagem (0 a 1)
+                zIndex={0}
+            />
+            
             <TileLayer
                 attribution="&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                zIndex={1}
             />
             {/* Função para clicar no mapa e mostras as coordenadas */}
             <LogCoordinatesOnClick />
             <CheckMapBounds center={locationIgrejaDasNeves} radius={radius * 100000} />
-                
+            
             {/* Adicione uma imagem ao mapa */}
             <ImageOverlay
                 url={imageOverlayUrl}
                 bounds={bounds}
                 opacity={1} // Opacidade da imagem (0 a 1)
-                zIndex={8}
+                zIndex={3}
             />
-            {/* Adicione um círculo ao mapa */}
-            
+
             {Object.values(data).map((o) => {
                 return (
                     <Marcador 
                     location={o.bounds}
                     content={o.content}
                     message={o.message}
+                    zIndex={4}
                     />
                 )
             })}
+            
         </MapContainer>
         ): (<Spiner/>) }
         </>
