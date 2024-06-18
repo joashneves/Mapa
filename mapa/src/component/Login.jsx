@@ -20,6 +20,7 @@ const Login = () => {
     return (
         <>
         <article className={styles.logar}>
+            <div>
             <label>User<input
                 type="User"
                 id="User"
@@ -28,7 +29,9 @@ const Login = () => {
                 value={user}
                 onChange={(e) => setUser(e.target.value)} />
             </label>
-            <label>PassWord<input
+            </div>
+            <div>
+            <label>Senha<input
                 type="PassWord"
                 id="PassWord"
                 name="PassWord"
@@ -36,6 +39,7 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)} />
             </label>
+            </div>
             
             <input type="button" onClick={Logar} value="Logar"/>
             </article>

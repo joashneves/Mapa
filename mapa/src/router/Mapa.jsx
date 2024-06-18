@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Circle, useMapEvent, ImageOverlay , useMap , SVGOverlay} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import imageOverlayUrl from '../assets/mapadefinitivo.jpeg';
+import imageOverlayUrl from '../assets/mapadefinitivo.png';
 import imagemPorbaixo from '../assets/jarare.PNG';
 import axios from 'axios';
 import { useMediaQuery } from 'react-responsive';
@@ -14,7 +14,7 @@ import Marcador from '../component/Marcador';
 import Spiner from '../component/Spiner';
 
 
-import jsonData from 'C:/Users/joas.neves/Desktop/Mapa kennedy/Mapa/backend/configuracoes.json';
+//import jsonData from 'C:/Users/joas.neves/Desktop/Mapa kennedy/Mapa/backend/configuracoes.json';
 
 const locationIgrejaDasNeves = [-21.234602324714437, -40.9909987449646];
 const radius = 0.005; // Raio permitido em graus (aproximado)
@@ -90,14 +90,25 @@ const Mapa = () => {
  
                 } catch (error) {
                     console.error('Erro ao carregar dados:', error);
-                    setData(jsonData); // Caso não consiga se conectar ao backend ele puxa do proprio computador
+                   // setData(jsonData); // Caso não consiga se conectar ao backend ele puxa do proprio computador
                     setCarregado(true);
                 }
             
         };
 
         fetchData();
+
+        const sleep = (ms) =>{
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        const AtualizarPaginga = async () =>{
+            await sleep(30000);
+            window.location.reload()
+        }
+
+        AtualizarPaginga();
     }, []); // A lista de dependências está vazia, portanto, useEffect será executado apenas uma vez após a montagem do componente
+
 
 
     const locationIgrejaDasNeves =  [-21.231612173518077, -40.98758965730667];

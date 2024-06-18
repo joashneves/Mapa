@@ -3,6 +3,7 @@ import Configuracao from "../component/Configuracao";
 import axios from 'axios';
 import Login from '../component/Login';
 import Loader from '../component/Spiner';
+import styles from './Gerencia.module.css';
 
 const Gerencia = () =>{
 
@@ -71,7 +72,8 @@ const Gerencia = () =>{
         {logado ? (<Login/>) : (
         <>
         
-        <button type="button" onClick={enviarInfo} >Salvas!</button>
+        <button type="button" onClick={enviarInfo} >Salvar!</button>
+        <div>
         {Object.values(data).map((o) => {
                 return (
                     <Configuracao 
@@ -81,6 +83,7 @@ const Gerencia = () =>{
                     onChange={handleConfiguracaoChange}/>
                 )
             })}
+            </div>
         </>
         )
         }

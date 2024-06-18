@@ -11,7 +11,13 @@ const app = express();
 
 app.use(express.json());
 
-app.use(cors())
+// Enable cors at the server side. 
+const corsOption = {
+  origin: ['*', 'http://177.154.164.194:3002'],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+}
+app.use(cors());
 
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
@@ -69,17 +75,7 @@ app.put('/atualizar-configuracoes', (req, res) => {
   });
 });
 
-app.listen(PORT, ip, () => {
-  console.log(`Server listening on http://${ip}:${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server listening on ${PORT}`);
 });
 
-app.listen(80, function () {
-  console.log('CORS-enabled web server listening on port 80')
-})
-// Enable cors at the server side. 
-const corsOption = {
-    origin: ['http://172.16.0.51:3002'],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-}
-app.use(cors(corsOption));
